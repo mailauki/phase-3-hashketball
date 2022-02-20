@@ -127,3 +127,80 @@ def game_hash
 end
 
 # Write code here
+def num_points_scored player_input
+  all_players = game_hash[:home][:players] << game_hash[:away][:players]
+  all_players = all_players.flatten
+  all_players.find { |player| player[:player_name] == player_input }[:points]
+end
+
+def shoe_size player_input
+  all_players = game_hash[:home][:players] << game_hash[:away][:players]
+  all_players = all_players.flatten
+  all_players.find { |player| player[:player_name] == player_input }[:shoe]
+end
+
+def team_colors team
+  if game_hash[:home][:team_name] == team 
+    game_hash[:home][:colors]
+  elsif game_hash[:away][:team_name] == team
+    game_hash[:away][:colors]
+  end
+end
+
+def team_names
+  teams = []
+  teams << game_hash[:home][:team_name]
+  teams << game_hash[:away][:team_name]
+end
+
+def player_numbers team
+  if game_hash[:home][:team_name] == team
+    game_hash[:home][:players].map { |player| player[:number] }
+  elsif game_hash[:away][:team_name] == team
+    game_hash[:away][:players].map { |player| player[:number] }
+  end
+end
+
+def player_stats player_input
+  all_players = game_hash[:home][:players] << game_hash[:away][:players]
+  all_players = all_players.flatten
+  all_players.find { |player| player[:player_name] == player_input }
+end
+
+def big_shoe_rebounds
+  all_players = game_hash[:home][:players] << game_hash[:away][:players]
+  all_players = all_players.flatten
+  big_shoe = all_players.map { |player| player[:shoe] }.max
+  all_players.find { |player| player[:shoe] == big_shoe }[:rebounds]
+end
+
+def most_points_scored
+  all_players = game_hash[:home][:players] << game_hash[:away][:players]
+  all_players = all_players.flatten
+  most_points = all_players.map { |player| player[:points] }.max
+  all_players.find { |player| player[:points] == most_points }[:player_name]
+end
+
+def winning_team
+  home_points = game_hash[:home][:players].map { |player| player[:points] }.sum
+  away_points = game_hash[:away][:players].map { |player| player[:points] }.sum
+  if home_points > away_points
+    game_hash[:home][:team_name]
+  else
+    game_hash[:away][:team_name]
+  end
+end
+
+def player_with_longest_name
+  all_players = game_hash[:home][:players] << game_hash[:away][:players]
+  all_players = all_players.flatten
+  max_length = all_players.map { |player| player[:player_name].length }.max
+  all_players.find { |player| player[:player_name].length == max_length }[:player_name]
+end
+
+def long_name_steals_a_ton
+  all_players = game_hash[:home][:players] << game_hash[:away][:players]
+  all_players = all_players.flatten
+  most_steals = all_players.map { |player| player[:steals] }.max
+  all_players.find { |player| player[:steals] == most_steals }[:player_name] == player_with_longest_name
+end
